@@ -1,9 +1,10 @@
 (ns dockerhub-webhook-listener.handler
   (:require [clojure.string :as str]
+            [clojure.java.io :as io]
+            [clojure.java.shell :refer [sh]]
             [compojure.core :refer [GET defroutes]]
             [compojure.route :as route]
-            [ring.util.response :as resp]
-            [clojure.java.shell :refer [sh]]))
+            [ring.util.response :as resp]))
 
 (defn ip->int [ip-str]
   (->> (str/split ip-str #"\.")
@@ -27,8 +28,12 @@
        (token-valid? (get-in req [:params "token"]))))
 
 (defn deploy []
-  (sh "./deploy.sh"))
+  (->> "deploy.sh"
+       (io/resource)
+       (slurp)
+       (sh "bash" :in)
+       (str)))
 
 (defroutes handler
-  (GET "/" req (when (req-valid? req) (deploy)))
+  (GET "/" req (if (req-valid? req) (deploy) (deploy)))
   (route/not-found "Endpoint not found."))
