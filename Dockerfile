@@ -2,7 +2,7 @@ FROM frolvlad/alpine-oraclejdk8:slim
 
 # Boot
 
-RUN apk add --update bash openssl && \
+RUN apk add --update bash openssl docker && \
     wget -O /usr/bin/boot https://github.com/boot-clj/boot/releases/download/2.0.0/boot.sh && \
     chmod +x /usr/bin/boot
 
@@ -15,8 +15,9 @@ RUN /usr/bin/boot web -s doesnt/exist repl -e '(System/exit 0)'
 RUN rm -rf target
 
 WORKDIR /dockerhub-webhook-listener
-ADD . /dockerhub-webhook-listener
+ADD build.boot ./
+ADD src ./src
 
 EXPOSE 8080
 RUN /usr/bin/boot prod
-CMD /opt/java/bin/java -jar target/dockerhub-webhook-listener.jar
+CMD /usr/bin/java -jar target/dockerhub-webhook-listener.jar

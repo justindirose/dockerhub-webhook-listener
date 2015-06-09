@@ -28,10 +28,7 @@
        (token-valid? (get-in req [:params "token"]))))
 
 (defn deploy []
-  (->> "deploy.sh"
-       (io/resource)
-       (slurp)
-       (sh "bash" :in)
+  (->> (sh "rsc/deploy.sh")
        (str)))
 
 (defroutes handler
