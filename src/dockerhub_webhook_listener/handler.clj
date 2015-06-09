@@ -2,7 +2,8 @@
   (:require [clojure.string :as str]
             [compojure.core :refer [GET defroutes]]
             [compojure.route :as route]
-            [ring.util.response :as resp]))
+            [ring.util.response :as resp]
+            [clojure.java.shell :refer [sh]]))
 
 (defn ip->int [ip-str]
   (->> (str/split ip-str #"\.")
@@ -25,6 +26,9 @@
   (and (from-dockerhub? (:remote-addr req))
        (token-valid? (get-in req [:params "token"]))))
 
+(defn deploy []
+  (sh "./deploy.sh"))
+
 (defroutes handler
-  (GET "/" req (if (req-valid? req) "Pass." "Fail."))
+  (GET "/" req (when (req-valid? req) (deploy)))
   (route/not-found "Endpoint not found."))
