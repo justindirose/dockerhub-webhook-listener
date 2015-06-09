@@ -1,5 +1,6 @@
 (ns dockerhub-webhook-listener.server
-  (:require [org.httpkit.server :refer [run-server]]
+  (:require [ring.middleware.params :refer [wrap-params]]
+            [org.httpkit.server :refer [run-server]]
             [dockerhub-webhook-listener.handler :as h])
   (:gen-class))
 
@@ -10,7 +11,7 @@
       (run-server handler {:port port})))
   server)
 
-(def handler #'h/handler)
+(def handler (-> #'h/handler wrap-params))
 
 (defn -main [& [port]]
   (run handler port))
