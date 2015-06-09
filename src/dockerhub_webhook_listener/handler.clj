@@ -32,5 +32,5 @@
        (str)))
 
 (defroutes handler
-  (GET "/" req (if (req-valid? req) (deploy) (deploy)))
+  (GET "/" req (if (req-valid? req) (deploy) "Invalid request."))
   (route/not-found "Endpoint not found."))
