@@ -4,8 +4,8 @@
   :source-paths #{"src"}
   :target-path  "target"
   :dependencies '[[org.clojure/clojure "1.6.0"]
-                  [ring "1.3.2"]
-                  [compojure "1.3.0"]
+                  [ring "1.4.0-RC1"]
+                  [compojure "1.3.4"]
                   [http-kit "2.1.19"]])
 
 (require
