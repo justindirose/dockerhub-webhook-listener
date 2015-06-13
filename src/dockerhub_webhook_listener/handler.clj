@@ -2,7 +2,7 @@
   (:require [clojure.string :as str]
             [clojure.java.io :as io]
             [clojure.java.shell :refer [sh]]
-            [compojure.core :refer [GET defroutes]]
+            [compojure.core :refer [POST defroutes]]
             [compojure.route :as route]
             [ring.util.response :as resp]))
 
