@@ -20,6 +20,6 @@ docker pull zoondka/dockerhub-webhook-listener
 docker run -d -p 8080:8080 \
            -v /path/to/dockerhub-webhook-listener/rsc:/dockerhub-webhook-listener/rsc \
            -v /var/run/docker.sock:/var/run/docker.sock --name dockerhub-webhook-listener \
-           -e DOCKERHUB_TOKEN=$TOKEN
+           -e DOCKERHUB_TOKEN=$TOKEN \
            zoondka/dockerhub-webhook-listener
 ```
