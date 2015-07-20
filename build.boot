@@ -3,9 +3,9 @@
 (set-env!
   :source-paths #{"src"}
   :target-path  "target"
-  :dependencies '[[org.clojure/clojure "1.6.0"]
-                  [ring "1.4.0-RC1"]
-                  [compojure "1.3.4"]
+  :dependencies '[[org.clojure/clojure "1.7.0"]
+                  [ring "1.4.0"]
+                  [compojure "1.4.0"]
                   [http-kit "2.1.19"]])
 
 (require
@@ -14,11 +14,10 @@
   '[ring.middleware.file                    :as file]
   '[ring.middleware.file-info               :as file-info])
 
-
 (defn dev-handler []
   (-> server/handler (reload/wrap-reload)
-    (file/wrap-file "target")
-    (file-info/wrap-file-info)))
+                     (file/wrap-file "target")
+                     (file-info/wrap-file-info)))
 
 (deftask dev
   "Start internal httpkit server for development."
