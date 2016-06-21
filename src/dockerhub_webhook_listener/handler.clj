@@ -10,7 +10,7 @@
   (= (System/getenv "DOCKERHUB_TOKEN") token))
 
 (defn req-valid? [req]
-  (and (token-valid? (get-in req [:params "token"]))))
+  (token-valid? (get-in req [:params "token"])))
 
 (defn deploy []
   (->> (sh "rsc/deploy.sh")
